@@ -10,8 +10,13 @@ config_version=4
 
 [application]
 
-config/name="software-engineering-group-project"
+config/name="Software Engineering Group Project"
+run/main_scene="res://scenes/main/main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+SaveFile="*res://autoload/save_file.gd"
 
 [gui]
 
