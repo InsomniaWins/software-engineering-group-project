@@ -5,8 +5,13 @@ var _current_scene:Node = null
 onready var _current_scene_node:Control = $CurrentScene
 onready var _freed_scenes_node:Control = $FreedScenes
 
+
 func _ready():
-	_current_scene = _current_scene_node.get_child(0)
+	
+	SceneManager.set_scene_manager(self)
+	
+	if _current_scene_node.get_child_count() > 0:
+		_current_scene = _current_scene_node.get_child(0)
 
 
 func get_current_scene() -> Node:
@@ -22,5 +27,5 @@ func change_scene(new_scene:String):
 		_freed_scenes_node.add_child(previous_scene)
 		previous_scene.queue_free()
 	
-	_current_scene_node.add_child(_current_scene)
+	_current_scene_node.add_child(next_scene)
 	_current_scene = next_scene
