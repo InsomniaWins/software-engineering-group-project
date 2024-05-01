@@ -23,5 +23,5 @@ animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "walk_down",
-"speed": 5.0
+"speed": 8.0
 } ]
