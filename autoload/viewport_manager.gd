@@ -9,8 +9,10 @@ var _viewport_shaking:Vector2 = Vector2(0,0)
 func _ready():
 	get_tree().connect("screen_resized", self, "recalculate_viewport_rect")
 
+
 func _process(delta):
 	recalculate_viewport_rect()
+
 
 func recalculate_viewport_rect():
 	if integer_scaling:

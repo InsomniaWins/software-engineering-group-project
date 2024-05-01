@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Control",
+"class": "Level",
+"language": "GDScript",
+"path": "res://scenes/level/level.gd"
+}, {
+"base": "Control",
 "class": "VerticalButtonBox",
 "language": "GDScript",
 "path": "res://scenes/vertical_button_box/vertical_button_box.gd"
 } ]
 _global_script_class_icons={
+"Level": "",
 "VerticalButtonBox": ""
 }
 
