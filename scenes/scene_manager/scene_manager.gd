@@ -6,16 +6,18 @@ onready var _current_scene_node:Control = $CurrentScene
 onready var _freed_scenes_node:Control = $FreedScenes
 
 
+
 func _ready():
-	
 	SceneManager.set_scene_manager(self)
 	
 	if _current_scene_node.get_child_count() > 0:
 		_current_scene = _current_scene_node.get_child(0)
 
 
+
 func get_current_scene() -> Node:
 	return _current_scene
+
 
 
 func change_scene(new_scene:String):
