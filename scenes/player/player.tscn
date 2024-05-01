@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite_frames/player.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://scenes/player/health_manager.gd" type="Script" id=3]
+[ext_resource path="res://textures/hud/health_indicator.png" type="Texture" id=4]
+[ext_resource path="res://scenes/player/health_indicator.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -15,5 +18,136 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 2 )
 animation = "walk_down"
-frame = 1
+frame = 2
 playing = true
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="HealthIndicator" type="Control" parent="Hud"]
+margin_right = 192.0
+margin_bottom = 24.0
+script = ExtResource( 5 )
+
+[node name="Background" type="ColorRect" parent="Hud/HealthIndicator"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.121569, 0.054902, 0.109804, 1 )
+
+[node name="Hearts" type="Control" parent="Hud/HealthIndicator"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="0" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 5, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="1" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 13, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="2" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 21, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="3" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 29, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="4" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 37, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="5" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 45, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="6" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 53, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="7" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 61, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="8" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 69, 5 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="9" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 5, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="10" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 13, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="11" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 21, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="12" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 29, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="13" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 37, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="14" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 45, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+frame = 2
+
+[node name="15" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 53, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+frame = 4
+
+[node name="16" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 61, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+frame = 4
+
+[node name="17" type="Sprite" parent="Hud/HealthIndicator/Hearts"]
+position = Vector2( 69, 13 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+frame = 5

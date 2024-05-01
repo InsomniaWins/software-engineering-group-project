@@ -3,9 +3,11 @@ class_name Level
 
 export(NodePath) var _active_camera_path
 
+var active_camera:Camera2D = null
+
 var _camera_bounds_node:Control
 var _camera_bounds:Rect2 = Rect2(Vector2(), ViewportManager.BASE_RESOLUTION)
-var active_camera:Camera2D = null
+
 
 func _ready():
 	

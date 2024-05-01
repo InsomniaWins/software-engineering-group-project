@@ -1,19 +1,27 @@
 extends KinematicBody2D
 
-
-var _movement_input:Vector2 = Vector2()
-
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
+
+var _movement_input:Vector2 = Vector2()
 var _on_stairs:bool = false
 var _moving:bool = false
 
 
+onready var _health_manager = $HealthManager
+onready var _hud:CanvasLayer = $Hud
+onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
 onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 
 func _process(delta):
 	_handle_sprite_animations(delta)
+	
+	# handle health indicator
+	_health_indicator_node.update_hearts(
+		_health_manager.get_health(),
+		_health_manager.get_max_health()
+	)
 
 
 func _physics_process(delta):
@@ -27,7 +35,6 @@ func _handle_sprite_animations(delta):
 	else:
 		_character_sprite_node.playing = false
 		_character_sprite_node.frame = 0
-	
 
 
 func is_moving():
