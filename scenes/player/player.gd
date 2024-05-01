@@ -22,16 +22,6 @@ onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 
 func _process(delta):
 	
-	if Input.is_action_just_pressed("ui_accept"):
-		take_damage(1)
-	elif Input.is_action_just_pressed("ui_cancel"):
-		restore_health(1)
-	
-	if Input.is_action_just_pressed("ui_focus_next"):
-		var health_pickup = preload("res://scenes/health_pickup/health_pickup.tscn").instance()
-		health_pickup.position = global_position + Vector2(0, -20)
-		get_parent().add_child(health_pickup)
-	
 	_handle_sprite_animations(delta)
 	
 	# handle health indicator
