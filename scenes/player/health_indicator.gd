@@ -21,7 +21,7 @@ func update_hearts(health:int, max_health:int):
 			heart_node.frame = frame
 		elif i < active_heart:
 			heart_node.frame = 0
-		elif i < heart_of_max_health:
+		elif i <= heart_of_max_health:
 			heart_node.frame = 4
 		else:
 			heart_node.frame = 5

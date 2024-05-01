@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite_frames/player.tres" type="SpriteFrames" id=2]
@@ -8,6 +8,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3, 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 6.5 )
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
@@ -152,3 +155,13 @@ texture = ExtResource( 4 )
 centered = false
 hframes = 6
 frame = 5
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2( 0, 3.5 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]

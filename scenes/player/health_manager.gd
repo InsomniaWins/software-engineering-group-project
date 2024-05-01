@@ -6,6 +6,11 @@ var _max_health:int = 12
 var _health:int = 12
 
 
+func restore_health(heal_amount:int):
+	heal_amount = int(clamp(heal_amount, 0, _max_health - _health))
+	_health += heal_amount
+
+
 func take_damage(damage_amount:int = 0):
 	damage_amount = int(clamp(damage_amount, 0, _health))
 	_health -= damage_amount

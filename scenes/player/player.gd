@@ -3,6 +3,8 @@ extends KinematicBody2D
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
 
+
+
 var _facing_direction:Vector2 = Vector2.DOWN
 var _knockback_velocity:Vector2 = Vector2()
 var _knockback_resistance:float = 0.1
@@ -19,6 +21,17 @@ onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 
 
 func _process(delta):
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		take_damage(1)
+	elif Input.is_action_just_pressed("ui_cancel"):
+		restore_health(1)
+	
+	if Input.is_action_just_pressed("ui_focus_next"):
+		var health_pickup = preload("res://scenes/health_pickup/health_pickup.tscn").instance()
+		health_pickup.position = global_position + Vector2(0, -20)
+		get_parent().add_child(health_pickup)
+	
 	_handle_sprite_animations(delta)
 	
 	# handle health indicator
@@ -123,13 +136,21 @@ func _process_movement(_delta:float):
 			elif velocity.y > 0:
 				_facing_direction = Vector2.DOWN
 
+
 func is_on_stairs():
 	return _on_stairs
+
+
+func restore_health(heal_amount:int):
+	_health_manager.restore_health(heal_amount)
+
 
 func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
 	_health_manager.take_damage(damage_amount)
 	_knockback_velocity = knockback
 
 
-
-
+func _on_PickupArea_body_entered(body):
+	if body.is_in_group("health_pickup"):
+		restore_health(1)
+		body.queue_free()
