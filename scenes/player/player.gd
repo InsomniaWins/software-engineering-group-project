@@ -87,29 +87,41 @@ func get_facing_direction() -> Vector2:
 
 func _process_movement(_delta:float):
 	
+	# set previous position
 	_previous_position = position
+	
+	
+	# get velocity
 	velocity = _movement_input.normalized() * move_speed
+	var velocity_before_move_and_slide = velocity
 	
-	if abs(velocity.x) > abs(velocity.y):
-		if velocity.x < 0:
-			_facing_direction = Vector2.LEFT
-		elif velocity.x > 0:
-			_facing_direction = Vector2.RIGHT
-	else:
-		if velocity.y < 0:
-			_facing_direction = Vector2.UP
-		elif velocity.y > 0:
-			_facing_direction = Vector2.DOWN
 	
+	# alter velocity if on stairs
 	if _on_stairs and velocity.x != 0:
 		velocity.x *= 0.5
 		velocity.y += sign(velocity.x) * move_speed * 0.5
 	
+	
+	# apply velocity and get velocity after collision
 	velocity = move_and_slide(velocity)
 	
+	
+	# set if the player is moving
 	_moving = velocity.length() > 0.025
 	
-	_movement_input = Vector2()
+	
+	# set facing direction if moving
+	if is_moving():
+		if abs(velocity.x) > abs(velocity.y):
+			if velocity.x < 0:
+				_facing_direction = Vector2.LEFT
+			elif velocity.x > 0:
+				_facing_direction = Vector2.RIGHT
+		else:
+			if velocity.y < 0:
+				_facing_direction = Vector2.UP
+			elif velocity.y > 0:
+				_facing_direction = Vector2.DOWN
 
 func is_on_stairs():
 	return _on_stairs
