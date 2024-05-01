@@ -10,12 +10,18 @@ onready var _text_display_timer = $TextDisplayTimer
 
 var _current_text_index:int = 0
 var _text_array:Array = [
-	"[center]This is text!",
+	"[center]Long ago, there was a strong wizard.",
 	"[center]This is VERY\nVERY centered!"
 ]
 
 func _ready():
 	_show_text(_text_array[_current_text_index])
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("select"):
+		get_tree().set_input_as_handled()
+		_go_to_titlescreen()
 
 
 func _process(delta):
