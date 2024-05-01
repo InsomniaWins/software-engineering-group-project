@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/something_is_near.mp3-ab3ece1dc137f64ced6a94ac8ef49735.mp3str"
+
+[deps]
+
+source_file="res://music/something_is_near.mp3"
+dest_files=[ "res://.import/something_is_near.mp3-ab3ece1dc137f64ced6a94ac8ef49735.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

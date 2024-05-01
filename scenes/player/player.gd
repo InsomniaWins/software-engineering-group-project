@@ -3,6 +3,7 @@ extends KinematicBody2D
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
 
+var _facing_direction:Vector2 = Vector2.DOWN
 var _knockback_velocity:Vector2 = Vector2()
 var _knockback_resistance:float = 0.1
 var _movement_input:Vector2 = Vector2()
@@ -40,6 +41,16 @@ func _physics_process(delta):
 
 func _handle_sprite_animations(delta):
 	if is_moving():
+		match _facing_direction:
+			Vector2.UP:
+				_character_sprite_node.animation = "walk_up"
+			Vector2.DOWN:
+				_character_sprite_node.animation = "walk_down"
+			Vector2.LEFT:
+				_character_sprite_node.animation = "walk_left"
+			Vector2.RIGHT:
+				_character_sprite_node.animation = "walk_right"
+		
 		_character_sprite_node.playing = true
 	else:
 		_character_sprite_node.playing = false
@@ -59,6 +70,17 @@ func _process_movement(delta:float):
 	
 	_previous_position = position
 	velocity = _movement_input.normalized() * move_speed
+	
+	if abs(velocity.x) > abs(velocity.y):
+		if velocity.x < 0:
+			_facing_direction = Vector2.LEFT
+		elif velocity.x > 0:
+			_facing_direction = Vector2.RIGHT
+	else:
+		if velocity.y < 0:
+			_facing_direction = Vector2.UP
+		elif velocity.y > 0:
+			_facing_direction = Vector2.DOWN
 	
 	_moving = velocity.length() > 0
 	

@@ -3,7 +3,7 @@ extends Node
 const BASE_RESOLUTION:Vector2 = Vector2(192, 144)
 
 var integer_scaling:bool = true
-var sub_pixel_animations:bool = true
+var sub_pixel_animations:bool = false
 var _viewport_shaking:Vector2 = Vector2(0,0)
 
 func _ready():

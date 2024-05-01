@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mushroom_dance.ogg-36f02d23783ad7d6ccd716caaca1b593.oggstr"
+
+[deps]
+
+source_file="res://music/mushroom_dance.ogg"
+dest_files=[ "res://.import/mushroom_dance.ogg-36f02d23783ad7d6ccd716caaca1b593.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
