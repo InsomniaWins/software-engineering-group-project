@@ -10,3 +10,14 @@ func set_scene_manager(node:Control):
 
 func change_scene(scene_path:String):
 	_scene_manager.change_scene(scene_path)
+
+func get_current_scene():
+	return _scene_manager.get_current_scene()
+
+func get_player():
+	
+	var player_nodes = get_tree().get_nodes_in_group("player")
+	if player_nodes.size() == 0:
+		return null
+	
+	return player_nodes[0]

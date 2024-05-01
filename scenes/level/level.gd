@@ -17,7 +17,7 @@ func _ready():
 	update_camera_bounds()
 
 
-func _process(delta):
+func _process(_delta):
 	update_camera_bounds()
 
 
@@ -33,8 +33,8 @@ func update_camera_bounds():
 	if !is_instance_valid(active_camera):
 		return
 	
-	active_camera.limit_left = _camera_bounds.position.x
-	active_camera.limit_top = _camera_bounds.position.y
+	active_camera.limit_left = int(_camera_bounds.position.x)
+	active_camera.limit_top = int(_camera_bounds.position.y)
 	
-	active_camera.limit_right = _camera_bounds.position.x + _camera_bounds.size.x
-	active_camera.limit_bottom = _camera_bounds.position.y + _camera_bounds.size.y
+	active_camera.limit_right = int(_camera_bounds.position.x + _camera_bounds.size.x)
+	active_camera.limit_bottom = int(_camera_bounds.position.y + _camera_bounds.size.y)

@@ -39,18 +39,19 @@ func _physics_process(delta):
 	_knockback_velocity = move_and_slide(_knockback_velocity)
 
 
-func _handle_sprite_animations(delta):
+func _handle_sprite_animations(_delta:float):
+	
+	match _facing_direction:
+		Vector2.UP:
+			_character_sprite_node.animation = "walk_up"
+		Vector2.DOWN:
+			_character_sprite_node.animation = "walk_down"
+		Vector2.LEFT:
+			_character_sprite_node.animation = "walk_left"
+		Vector2.RIGHT:
+			_character_sprite_node.animation = "walk_right"
+	
 	if is_moving():
-		match _facing_direction:
-			Vector2.UP:
-				_character_sprite_node.animation = "walk_up"
-			Vector2.DOWN:
-				_character_sprite_node.animation = "walk_down"
-			Vector2.LEFT:
-				_character_sprite_node.animation = "walk_left"
-			Vector2.RIGHT:
-				_character_sprite_node.animation = "walk_right"
-		
 		_character_sprite_node.playing = true
 	else:
 		_character_sprite_node.playing = false
@@ -61,12 +62,30 @@ func is_moving():
 	return _moving
 
 
-func _process_movement_input(delta:float):
+func _process_movement_input(_delta:float):
 	_movement_input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	_movement_input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 
 
-func _process_movement(delta:float):
+func face_direction(new_direction:Vector2):
+	
+	if abs(new_direction.x) > abs(new_direction.y):
+		if new_direction.x > 0:
+			_facing_direction = Vector2.RIGHT
+		else:
+			_facing_direction = Vector2.LEFT
+	else:
+		if new_direction.y > 0:
+			_facing_direction = Vector2.DOWN
+		else:
+			_facing_direction = Vector2.UP
+
+
+func get_facing_direction() -> Vector2:
+	return _facing_direction
+
+
+func _process_movement(_delta:float):
 	
 	_previous_position = position
 	velocity = _movement_input.normalized() * move_speed
@@ -82,13 +101,13 @@ func _process_movement(delta:float):
 		elif velocity.y > 0:
 			_facing_direction = Vector2.DOWN
 	
-	_moving = velocity.length() > 0
-	
 	if _on_stairs and velocity.x != 0:
 		velocity.x *= 0.5
 		velocity.y += sign(velocity.x) * move_speed * 0.5
 	
-	move_and_slide(velocity)
+	velocity = move_and_slide(velocity)
+	
+	_moving = velocity.length() > 0.025
 	
 	_movement_input = Vector2()
 

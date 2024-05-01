@@ -8,9 +8,9 @@ onready var _heart_nodes:Array = _hearts_node.get_children()
 
 func update_hearts(health:int, max_health:int):
 	
-	var active_heart:int = ceil(health / float(HEALTH_PER_HEART)) - 1
+	var active_heart:int = int(ceil(health / float(HEALTH_PER_HEART)) - 1)
 	
-	var heart_of_max_health:int = (max_health / float(HEALTH_PER_HEART))-1
+	var heart_of_max_health:int = int(max_health / float(HEALTH_PER_HEART))-1
 	
 	for i in _heart_nodes.size():
 		

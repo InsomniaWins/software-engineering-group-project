@@ -7,10 +7,10 @@ var sub_pixel_animations:bool = false
 var _viewport_shaking:Vector2 = Vector2(0,0)
 
 func _ready():
-	get_tree().connect("screen_resized", self, "recalculate_viewport_rect")
+	var _signal_connection_result = get_tree().connect("screen_resized", self, "recalculate_viewport_rect")
 
 
-func _process(delta):
+func _process(_delta):
 	recalculate_viewport_rect()
 
 

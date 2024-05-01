@@ -40,7 +40,7 @@ func set_buttons(button_names:Array):
 
 
 func remove_button(button_index:int):
-	_button_names.remove(0)
+	_button_names.remove(button_index)
 	_update_labels()
 
 

@@ -14,7 +14,6 @@ func _ready():
 		_current_scene = _current_scene_node.get_child(0)
 
 
-
 func get_current_scene() -> Node:
 	return _current_scene
 
