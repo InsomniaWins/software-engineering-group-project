@@ -22,11 +22,16 @@ func _ready():
 
 func _unhandled_input(event):
 	if event.is_action_pressed("up"):
+		get_tree().set_input_as_handled()
 		_move_up()
-		get_tree().set_input_as_handled()
+		
 	elif event.is_action_pressed("down"):
-		_move_down()
 		get_tree().set_input_as_handled()
+		_move_down()
+		
+	elif event.is_action_pressed("select"):
+		get_tree().set_input_as_handled()
+		_press()
 
 
 func set_buttons(button_names:Array):
@@ -111,11 +116,11 @@ func select_button(button_index:int):
 
 
 func _button_deselected(button_index:int):
-	emit_signal("button_deselected", [self, button_index])
+	emit_signal("button_deselected", self, button_index)
 
 
 func _button_selected(button_index:int):
-	emit_signal("button_selected", [self, button_index])
+	emit_signal("button_selected", self, button_index)
 	
 
 
@@ -127,5 +132,9 @@ func _move_up():
 	_move(-1)
 
 
+func get_button_name(button_index:int):
+	return _button_names[button_index]
+
+
 func _press():
-	emit_signal("button_pressed", [self, _selected_button])
+	emit_signal("button_pressed", self, _selected_button)

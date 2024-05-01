@@ -10,8 +10,8 @@ onready var _text_display_timer = $TextDisplayTimer
 
 var _current_text_index:int = 0
 var _text_array:Array = [
-	"[center]Long ago, there was a strong wizard.",
-	"[center]This is VERY\nVERY centered!"
+	"[center]This is text!",
+	"[center]This is also\nTEXT!"
 ]
 
 func _ready():
