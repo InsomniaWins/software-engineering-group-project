@@ -3,6 +3,8 @@ extends KinematicBody2D
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
 
+var _knockback_velocity:Vector2 = Vector2()
+var _knockback_resistance:float = 0.1
 var _movement_input:Vector2 = Vector2()
 var _on_stairs:bool = false
 var _moving:bool = false
@@ -13,6 +15,7 @@ onready var _hud:CanvasLayer = $Hud
 onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
 onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
+
 
 func _process(delta):
 	_handle_sprite_animations(delta)
@@ -27,6 +30,12 @@ func _process(delta):
 func _physics_process(delta):
 	_process_movement_input(delta)
 	_process_movement(delta)
+	
+	# process knockback
+	_knockback_velocity = _knockback_velocity.linear_interpolate(Vector2.ZERO, _knockback_resistance)
+	if _knockback_velocity.length() < 16:
+		_knockback_velocity = Vector2.ZERO
+	_knockback_velocity = move_and_slide(_knockback_velocity)
 
 
 func _handle_sprite_animations(delta):
@@ -58,7 +67,16 @@ func _process_movement(delta:float):
 		velocity.y += sign(velocity.x) * move_speed * 0.5
 	
 	move_and_slide(velocity)
+	
 	_movement_input = Vector2()
 
 func is_on_stairs():
 	return _on_stairs
+
+func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
+	_health_manager.take_damage(damage_amount)
+	_knockback_velocity = knockback
+
+
+
+

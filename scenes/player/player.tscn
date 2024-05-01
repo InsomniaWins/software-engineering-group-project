@@ -18,7 +18,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 2 )
 animation = "walk_down"
-frame = 2
+frame = 3
 playing = true
 
 [node name="HealthManager" type="Node" parent="."]
