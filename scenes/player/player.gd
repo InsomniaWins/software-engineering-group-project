@@ -42,14 +42,21 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	
 	_process_movement_input(delta)
-	_process_movement(delta)
 	
 	
 	# interacting
-	_interaction_raycast_node.cast_to = _facing_direction * 12
+	if _movement_input.length() > 0:
+		_interaction_raycast_node.cast_to = _movement_input.normalized() * 12
+	else:
+		_interaction_raycast_node.cast_to = _facing_direction * 12
 	if Input.is_action_just_pressed("select"):
 		_interact()
+	
+	
+	_process_movement(delta)
+	
 	
 	# attacking
 	if Input.is_action_just_pressed("attack"):

@@ -18,6 +18,12 @@ shape = SubResource( 1 )
 texture = ExtResource( 2 )
 hframes = 2
 
+[node name="GlowSprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 2 )
+hframes = 2
+frame = 1
+
 [node name="StopGlowTImer" type="Timer" parent="."]
 one_shot = true
 
