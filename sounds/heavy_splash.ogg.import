@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/heavy_splash.ogg-776ab77de6a7dc80f9f2b1337469afaa.oggstr"
+
+[deps]
+
+source_file="res://sounds/heavy_splash.ogg"
+dest_files=[ "res://.import/heavy_splash.ogg-776ab77de6a7dc80f9f2b1337469afaa.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

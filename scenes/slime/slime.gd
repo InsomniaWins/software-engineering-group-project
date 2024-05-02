@@ -22,7 +22,8 @@ var _vision_range:float = 48.0
 onready var _player_vision_ray_cast:RayCast2D = $PlayerVisionRayCast
 onready var _health_manager_node:Node = $HealthManager
 onready var _attack_area_node:Area2D = $AttackArea
-onready var _sprite:AnimatedSprite = $Sprite
+onready var _sprite_node:AnimatedSprite = $Sprite
+onready var _damage_sound_player_node:AudioStreamPlayer = $DamageSound
 
 func _physics_process(delta):
 	
@@ -69,6 +70,8 @@ func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
 	_health_manager_node.take_damage(damage_amount)
 	_knockback_velocity = knockback
 	
+	_damage_sound_player_node.stop()
+	_damage_sound_player_node.play(0.0)
 
 
 func _follow_and_attack_target(delta:float):
@@ -85,7 +88,7 @@ func _follow_and_attack_target(delta:float):
 	var move_direction = global_position.direction_to(target_position)
 	
 	if move_direction.x != 0.0:
-		_sprite.scale.x = -sign(move_direction.x)
+		_sprite_node.scale.x = -sign(move_direction.x)
 	
 	_velocity = move_direction * move_speed
 	_velocity = move_and_slide(_velocity)
@@ -133,5 +136,7 @@ func _spawn_drops():
 func _died():
 	
 	_spawn_drops()
+	
+	AudioManager.play_sound(preload("res://sounds/fly_away.ogg"))
 	
 	queue_free()

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bling.ogg-e315fe7fdbeaf7b7520670514ffb5972.oggstr"
+
+[deps]
+
+source_file="res://sounds/bling.ogg"
+dest_files=[ "res://.import/bling.ogg-e315fe7fdbeaf7b7520670514ffb5972.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

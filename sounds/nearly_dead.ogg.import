@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/nearly_dead.ogg-cb064accf37274b713f4b4658cb601c3.oggstr"
+
+[deps]
+
+source_file="res://sounds/nearly_dead.ogg"
+dest_files=[ "res://.import/nearly_dead.ogg-cb064accf37274b713f4b4658cb601c3.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -48,6 +48,7 @@ ViewportManager="*res://autoload/viewport_manager.gd"
 SceneManager="*res://autoload/scene_manager_autoload.gd"
 SaveManager="*res://autoload/save_manager.gd"
 ItemManager="*res://autoload/item_manager.gd"
+AudioManager="*res://autoload/audio_manager.gd"
 
 [display]
 
@@ -82,6 +83,10 @@ texture={
 "svg/scale": 1.0
 }
 mp3={
+"loop": false,
+"loop_offset": 0
+}
+ogg_vorbis={
 "loop": false,
 "loop_offset": 0
 }

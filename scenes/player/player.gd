@@ -25,6 +25,7 @@ onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
 onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 onready var _sword_attack_area_node:Node2D = $SwordAttackArea
+onready var _sword_swing_sound_player_node:AudioStreamPlayer = $SwordSwingSound
 
 func _process(delta):
 	
@@ -85,6 +86,10 @@ func _interact():
 
 
 func attack():
+	
+	if _attacking:
+		return
+	
 	match selected_item:
 		ItemManager.Items.SWORD:
 			_swing_sword()
@@ -94,6 +99,7 @@ func _swing_sword():
 	_can_change_selected_item = false
 	_attacking = true
 	_attack_animations_player_node.stop()
+	_sword_swing_sound_player_node.play()
 	
 	var attack_area = null
 	

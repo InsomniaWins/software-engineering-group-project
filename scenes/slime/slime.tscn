@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/slime/slime.gd" type="Script" id=1]
 [ext_resource path="res://textures/entities/slime.png" type="Texture" id=2]
 [ext_resource path="res://scenes/slime/HealthManager.gd" type="Script" id=3]
+[ext_resource path="res://sounds/jump.ogg" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -50,5 +51,8 @@ shape = SubResource( 6 )
 
 [node name="PlayerVisionRayCast" type="RayCast2D" parent="."]
 enabled = true
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="health_reached_zero" from="HealthManager" to="." method="_on_HealthManager_health_reached_zero"]
