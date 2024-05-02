@@ -48,7 +48,7 @@ func _follow_and_attack_target(delta:float):
 
 
 
-func _attack_target(delta:float):
+func _attack_target(_delta:float):
 	pass
 
 

@@ -19,7 +19,6 @@ func get_current_scene() -> Node:
 
 
 func change_scene(new_scene:String, player_position=null, player_facing_direction=null):
-	var next_scene:Node = load(new_scene).instance()
 	var previous_scene = _current_scene
 	
 	var previous_player_node = null
@@ -28,9 +27,13 @@ func change_scene(new_scene:String, player_position=null, player_facing_directio
 		
 		previous_player_node = SceneManager.get_player()
 		
-		_current_scene_node.remove_child(previous_scene)
-		_freed_scenes_node.add_child(previous_scene)
+		_current_scene_node.call_deferred("remove_child", previous_scene)
 		previous_scene.queue_free()
+	
+	call_deferred("finish_scene_change", new_scene, previous_player_node, player_position, player_facing_direction)
+
+func finish_scene_change(new_scene:String, previous_player_node, player_position, player_facing_direction):
+	var next_scene:Node = load(new_scene).instance()
 	
 	_current_scene_node.add_child(next_scene)
 	_current_scene = next_scene
@@ -48,3 +51,5 @@ func change_scene(new_scene:String, player_position=null, player_facing_directio
 		
 		if player_facing_direction != null:
 			player_node.face_direction(player_facing_direction)
+	
+	

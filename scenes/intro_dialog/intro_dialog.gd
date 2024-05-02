@@ -10,8 +10,10 @@ onready var _text_display_timer = $TextDisplayTimer
 
 var _current_text_index:int = 0
 var _text_array:Array = [
-	"[center]This is text!",
-	"[center]This is also\nTEXT!"
+	"[center]THE WORLD HAS FALLEN TO DARKNESS\nONCE MORE.",
+	"[center]IT NEEDS A HERO TO BRING IT BACK.",
+	"[center]FROM THE WATER,\nI WILL SUMMON YOU.",
+	"[center]MEER, SAVE THE WORLD."
 ]
 
 func _ready():
@@ -21,7 +23,7 @@ func _ready():
 func _unhandled_input(event):
 	if event.is_action_pressed("select"):
 		get_tree().set_input_as_handled()
-		_go_to_titlescreen()
+		_go_to_game()
 
 
 func _process(delta):
@@ -45,8 +47,8 @@ func _process(delta):
 					_character_timer += _CHARACTER_TIMER_INTERVAL
 
 
-func _go_to_titlescreen():
-	SceneManager.change_scene("res://scenes/titlescreen/titlescreen.tscn")
+func _go_to_game():
+	SceneManager.change_scene("res://scenes/world/start_area/start_area.tscn")
 
 
 func _show_text(text:String):
@@ -71,4 +73,4 @@ func _on_TextDisplayTimer_timeout():
 	if _current_text_index < _text_array.size():
 		_show_text(_text_array[_current_text_index])
 	else:
-		_go_to_titlescreen()
+		_go_to_game()

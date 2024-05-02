@@ -1,11 +1,12 @@
 extends KinematicBody2D
 
+export var _facing_direction:Vector2 = Vector2.DOWN
+
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
 var selected_item:int = ItemManager.Items.SWORD
 
 var _attacking:bool = false
-var _facing_direction:Vector2 = Vector2.DOWN
 var _knockback_velocity:Vector2 = Vector2()
 var _knockback_resistance:float = 0.1
 var _movement_input:Vector2 = Vector2()
@@ -13,6 +14,7 @@ var _on_stairs:bool = false
 var _moving:bool = false
 var _can_change_selected_item:bool = false
 
+onready var _interaction_raycast_node = $InteractionRayCast
 onready var _attack_animations_player_node = $AttackAnimationsPlayer
 onready var _sword_sprite_scalar_node = $SwordSpriteScaler
 onready var _sword_sprite_node = _sword_sprite_scalar_node.get_node("SwordSprite")
@@ -39,6 +41,11 @@ func _physics_process(delta):
 	_process_movement(delta)
 	
 	
+	# interacting
+	_interaction_raycast_node.cast_to = _facing_direction * 12
+	if Input.is_action_just_pressed("select"):
+		_interact()
+	
 	# attacking
 	if Input.is_action_just_pressed("attack"):
 		attack()
@@ -49,6 +56,16 @@ func _physics_process(delta):
 	if _knockback_velocity.length() < 16:
 		_knockback_velocity = Vector2.ZERO
 	_knockback_velocity = move_and_slide(_knockback_velocity)
+
+
+func _interact():
+	_interaction_raycast_node.force_raycast_update()
+	
+	if _interaction_raycast_node.is_colliding():
+		var collider = _interaction_raycast_node.get_collider()
+		
+		if collider.is_in_group("interactable"):
+			collider.interact()
 
 
 func attack():
@@ -135,7 +152,6 @@ func _process_movement(_delta:float):
 	velocity = Vector2.ZERO
 	if !_attacking:
 		velocity = _movement_input.normalized() * move_speed
-	var velocity_before_move_and_slide = velocity
 	
 	
 	# alter velocity if on stairs

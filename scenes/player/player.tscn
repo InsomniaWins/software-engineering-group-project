@@ -234,4 +234,9 @@ hframes = 3
 anims/RESET = SubResource( 4 )
 anims/swing_sword = SubResource( 3 )
 
+[node name="InteractionRayCast" type="RayCast2D" parent="."]
+position = Vector2( 0, 6 )
+enabled = true
+cast_to = Vector2( -12, 0 )
+
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]
