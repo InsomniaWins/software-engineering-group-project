@@ -7,5 +7,7 @@ func _on_VerticalButtonBox_button_pressed(button_box, button_index):
 	match button_name:
 		"NEW":
 			SceneManager.change_scene("res://scenes/intro_dialog/intro_dialog.tscn")
+		"CONTINUE":
+			SaveManager.load_game()
 		"QUIT":
 			get_tree().quit()

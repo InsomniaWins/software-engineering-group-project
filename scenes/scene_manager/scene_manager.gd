@@ -1,7 +1,10 @@
 extends Control
 
+signal scene_ready
+
 var _current_scene:Node = null
 
+onready var _level_music_player_node:AudioStreamPlayer = $LevelMusic
 onready var _current_scene_node:Control = $CurrentScene
 onready var _freed_scenes_node:Control = $FreedScenes
 
@@ -38,18 +41,35 @@ func finish_scene_change(new_scene:String, previous_player_node, player_position
 	_current_scene_node.add_child(next_scene)
 	_current_scene = next_scene
 	
-	var player_node = next_scene.find_node("Player")
-	if player_node != null and previous_player_node != null:
-		var previous_max_health = previous_player_node._health_manager.get_max_health()
-		var previous_health = previous_player_node._health_manager.get_health()
+	if next_scene is Level:
+		# copy player info over and set player position/direction
+		var player_node = next_scene.find_node("Player")
+		if player_node != null and previous_player_node != null:
+			var previous_max_health = previous_player_node._health_manager.get_max_health()
+			var previous_health = previous_player_node._health_manager.get_health()
+			
+			player_node._health_manager.set_max_health(previous_max_health)
+			player_node._health_manager.set_health(previous_health)
+			
+			if player_position != null:
+				player_node.global_position = player_position
+			
+			if player_facing_direction != null:
+				player_node.face_direction(player_facing_direction)
 		
-		player_node._health_manager.set_max_health(previous_max_health)
-		player_node._health_manager.set_health(previous_health)
+		# handle level music
+		if !next_scene.level_music.empty():
+			var current_music = _level_music_player_node.stream
+			var next_music = load(next_scene.level_music)
+			
+			if current_music != next_music:
+				_level_music_player_node.stream = next_music
+				_level_music_player_node.play()
 		
-		if player_position != null:
-			player_node.global_position = player_position
+	else:
 		
-		if player_facing_direction != null:
-			player_node.face_direction(player_facing_direction)
+		# stop level music as scene is not a level
+		_level_music_player_node.stop()
+		_level_music_player_node.stream = null
 	
-	
+	emit_signal("scene_ready")

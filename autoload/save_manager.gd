@@ -98,7 +98,7 @@ func load_game():
 	
 	SceneManager.change_scene(current_scene)
 	
-	
+	yield(SceneManager, "scene_ready")
 	
 	# load player info
 	var player = SceneManager.get_player()

@@ -2,6 +2,7 @@ extends Control
 class_name Level
 
 export(NodePath) var _active_camera_path
+export(String, FILE, "*.mp3, *.ogg, *.wav") var level_music:String
 
 var active_camera:Camera2D = null
 

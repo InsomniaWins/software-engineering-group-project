@@ -27,6 +27,11 @@ onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 
 func _process(delta):
 	
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		take_damage(1)
+	
+	
 	_handle_sprite_animations(delta)
 	
 	# handle health indicator

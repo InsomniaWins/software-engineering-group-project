@@ -3,10 +3,12 @@ extends StaticInteractable
 
 onready var _sprite:Sprite = $Sprite
 onready var _stop_glow_timer:Timer = $StopGlowTImer
+onready var _save_sound_audio_player:AudioStreamPlayer = $SaveSound
 
 func interact():
 	SaveManager.save_game()
 	_start_glow()
+	_save_sound_audio_player.play(0.0)
 
 
 func _start_glow():
