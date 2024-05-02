@@ -1,10 +1,9 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://tilesets/world_tileset.gd" type="Script" id=1]
 [ext_resource path="res://classes/level_trigger.gd" type="Script" id=2]
 [ext_resource path="res://scenes/world/start_area/start_area.gd" type="Script" id=3]
 [ext_resource path="res://textures/environment/tiles.png" type="Texture" id=4]
-[ext_resource path="res://scenes/slime/slime.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/save_stone/save_stone.tscn" type="PackedScene" id=7]
 
@@ -446,12 +445,6 @@ position = Vector2( 0, -12 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player/CamerMovementOffset"]
 current = true
-
-[node name="Slime" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 80, 360 )
-
-[node name="Slime2" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 160, 392 )
 
 [node name="SaveStone" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 64, 88 )

@@ -14,16 +14,17 @@ var _on_stairs:bool = false
 var _moving:bool = false
 var _can_change_selected_item:bool = false
 
+onready var _collision_shape = $CollisionShape2D
 onready var _interaction_raycast_node = $InteractionRayCast
 onready var _attack_animations_player_node = $AttackAnimationsPlayer
-onready var _sword_sprite_scalar_node = $SwordSpriteScaler
-onready var _sword_sprite_node = _sword_sprite_scalar_node.get_node("SwordSprite")
+onready var _sword_sprite_scaler_node = $SwordSpriteScaler
+onready var _sword_sprite_node = _sword_sprite_scaler_node.get_node("SwordSprite")
 onready var _health_manager = $HealthManager
 onready var _hud:CanvasLayer = $Hud
 onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
 onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
-
+onready var _sword_attack_area_node:Node2D = $SwordAttackArea
 
 func _process(delta):
 	
@@ -41,10 +42,13 @@ func _process(delta):
 	)
 
 
+func get_collision_box() -> CollisionShape2D:
+	return _collision_shape
+
+
 func _physics_process(delta):
 	
 	_process_movement_input(delta)
-	
 	
 	# interacting
 	if _movement_input.length() > 0:
@@ -91,18 +95,27 @@ func _swing_sword():
 	_attacking = true
 	_attack_animations_player_node.stop()
 	
+	var attack_area = null
+	
 	match _facing_direction:
 		Vector2.RIGHT:
-			_sword_sprite_scalar_node.rotation_degrees = 180
+			_sword_sprite_scaler_node.rotation_degrees = 180
+			attack_area = _sword_attack_area_node.get_node("Right")
 		Vector2.LEFT:
-			_sword_sprite_scalar_node.rotation_degrees = 0
+			_sword_sprite_scaler_node.rotation_degrees = 0
+			attack_area = _sword_attack_area_node.get_node("Left")
 		Vector2.DOWN:
-			_sword_sprite_scalar_node.rotation_degrees = 270
+			_sword_sprite_scaler_node.rotation_degrees = 270
+			attack_area = _sword_attack_area_node.get_node("Down")
 		Vector2.UP:
-			_sword_sprite_scalar_node.rotation_degrees = 90
+			_sword_sprite_scaler_node.rotation_degrees = 90
+			attack_area = _sword_attack_area_node.get_node("Up")
 	
 	_attack_animations_player_node.play("swing_sword")
 	
+	for body in attack_area.get_overlapping_bodies():
+		if body.is_in_group("enemy"):
+			body.take_damage(1, _facing_direction * 180)
 	
 	yield(_attack_animations_player_node, "animation_finished")
 	_attacking = false

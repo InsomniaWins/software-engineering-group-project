@@ -8,7 +8,8 @@ var current_save:Dictionary = new_save()
 func new_save() -> Dictionary:
 	var return_save = {}
 	
-	# save details holds information which can be serialized without custom code
+	# save details holds info which can be serialized without custom code
+	# this info is typically used for sequencing levels to prevent sequence breaking
 	# i.e bool, int, dictionary, string, etc.
 	# they should be set using the SaveManager.set_detail(detail_name, detail_value) function
 	# they should be read using the SaveManager.get_detail(detail_name, default_value) function
@@ -42,9 +43,13 @@ func save_game():
 	var player = SceneManager.get_player()
 	
 	if player != null:
+		file.set_value("save_data", "player_health", player._health_manager.get_health())
+		file.set_value("save_data", "player_max_health", player._health_manager.get_max_health())
 		file.set_value("save_data", "player_position", player.global_position)
 		file.set_value("save_data", "player_facing_direction", player.get_facing_direction())
 	else:
+		file.set_value("save_data", "player_health", 9)
+		file.set_value("save_data", "player_max_health", 9)
 		file.set_value("save_data", "player_position", Vector2.ZERO)
 		file.set_value("save_data", "player_facing_direction", Vector2.DOWN)
 	
@@ -106,6 +111,8 @@ func load_game():
 		printerr("Player is null and cannot load player info!")
 		get_tree().quit()
 	
+	player._health_manager._max_health = file.get_value("save_data", "player_max_health", 9)
+	player._health_manager._health = file.get_value("save_data", "player_health", 9)
 	player.global_position = file.get_value("save_data", "player_position", Vector2.ZERO)
 	player.face_direction(file.get_value("save_data", "player_facing_direction", Vector2.DOWN))
 	

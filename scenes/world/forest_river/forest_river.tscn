@@ -447,10 +447,10 @@ position = Vector2( 0, -12 )
 current = true
 
 [node name="Slime" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 80, 360 )
+position = Vector2( 48, 104 )
 
 [node name="Slime2" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 160, 392 )
+position = Vector2( 264, 80 )
 
 [node name="CameraBounds" type="Control" parent="."]
 margin_right = 336.0

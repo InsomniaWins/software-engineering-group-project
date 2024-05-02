@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite_frames/player.tres" type="SpriteFrames" id=2]
@@ -69,13 +69,25 @@ tracks/1/keys = {
 "values": [ 0, 1, 2 ]
 }
 
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 7, 7.5 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 7.5, 7 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 6.5, 7.5 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 7.5, 7.5 )
+
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 2 )
 animation = "walk_left"
-frame = 1
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -238,5 +250,32 @@ anims/swing_sword = SubResource( 3 )
 position = Vector2( 0, 6 )
 enabled = true
 cast_to = Vector2( -12, 0 )
+
+[node name="SwordAttackArea" type="Node2D" parent="."]
+position = Vector2( 0, 1 )
+
+[node name="Left" type="Area2D" parent="SwordAttackArea"]
+
+[node name="Shape" type="CollisionShape2D" parent="SwordAttackArea/Left"]
+position = Vector2( -9, 0.5 )
+shape = SubResource( 5 )
+
+[node name="Up" type="Area2D" parent="SwordAttackArea"]
+
+[node name="Shape" type="CollisionShape2D" parent="SwordAttackArea/Up"]
+position = Vector2( -0.5, -9 )
+shape = SubResource( 6 )
+
+[node name="Right" type="Area2D" parent="SwordAttackArea"]
+
+[node name="Shape" type="CollisionShape2D" parent="SwordAttackArea/Right"]
+position = Vector2( 8.5, -0.5 )
+shape = SubResource( 7 )
+
+[node name="Down" type="Area2D" parent="SwordAttackArea"]
+
+[node name="Shape" type="CollisionShape2D" parent="SwordAttackArea/Down"]
+position = Vector2( 0.5, 9.5 )
+shape = SubResource( 8 )
 
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]
