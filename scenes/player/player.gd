@@ -2,17 +2,20 @@ extends KinematicBody2D
 
 var move_speed:float = 64
 var velocity:Vector2 = Vector2()
+var selected_item:int = ItemManager.Items.SWORD
 
-
-
+var _attacking:bool = false
 var _facing_direction:Vector2 = Vector2.DOWN
 var _knockback_velocity:Vector2 = Vector2()
 var _knockback_resistance:float = 0.1
 var _movement_input:Vector2 = Vector2()
 var _on_stairs:bool = false
 var _moving:bool = false
+var _can_change_selected_item:bool = false
 
-
+onready var _attack_animations_player_node = $AttackAnimationsPlayer
+onready var _sword_sprite_scalar_node = $SwordSpriteScaler
+onready var _sword_sprite_node = _sword_sprite_scalar_node.get_node("SwordSprite")
 onready var _health_manager = $HealthManager
 onready var _hud:CanvasLayer = $Hud
 onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
@@ -35,11 +38,46 @@ func _physics_process(delta):
 	_process_movement_input(delta)
 	_process_movement(delta)
 	
+	
+	# attacking
+	if Input.is_action_just_pressed("attack"):
+		attack()
+	
+	
 	# process knockback
 	_knockback_velocity = _knockback_velocity.linear_interpolate(Vector2.ZERO, _knockback_resistance)
 	if _knockback_velocity.length() < 16:
 		_knockback_velocity = Vector2.ZERO
 	_knockback_velocity = move_and_slide(_knockback_velocity)
+
+
+func attack():
+	match selected_item:
+		ItemManager.Items.SWORD:
+			_swing_sword()
+
+
+func _swing_sword():
+	_can_change_selected_item = false
+	_attacking = true
+	_attack_animations_player_node.stop()
+	
+	match _facing_direction:
+		Vector2.RIGHT:
+			_sword_sprite_scalar_node.rotation_degrees = 180
+		Vector2.LEFT:
+			_sword_sprite_scalar_node.rotation_degrees = 0
+		Vector2.DOWN:
+			_sword_sprite_scalar_node.rotation_degrees = 270
+		Vector2.UP:
+			_sword_sprite_scalar_node.rotation_degrees = 90
+	
+	_attack_animations_player_node.play("swing_sword")
+	
+	
+	yield(_attack_animations_player_node, "animation_finished")
+	_attacking = false
+	_can_change_selected_item = true
 
 
 func _handle_sprite_animations(_delta:float):
@@ -71,7 +109,6 @@ func _process_movement_input(_delta:float):
 
 
 func face_direction(new_direction:Vector2):
-	
 	if abs(new_direction.x) > abs(new_direction.y):
 		if new_direction.x > 0:
 			_facing_direction = Vector2.RIGHT
@@ -95,7 +132,9 @@ func _process_movement(_delta:float):
 	
 	
 	# get velocity
-	velocity = _movement_input.normalized() * move_speed
+	velocity = Vector2.ZERO
+	if !_attacking:
+		velocity = _movement_input.normalized() * move_speed
 	var velocity_before_move_and_slide = velocity
 	
 	

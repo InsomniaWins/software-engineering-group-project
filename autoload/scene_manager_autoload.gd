@@ -8,8 +8,8 @@ func get_scene_manager() -> Control:
 func set_scene_manager(node:Control):
 	_scene_manager = node
 
-func change_scene(scene_path:String):
-	_scene_manager.change_scene(scene_path)
+func change_scene(scene_path:String, player_position=null, player_facing_direction=null):
+	_scene_manager.change_scene(scene_path, player_position, player_facing_direction)
 
 func get_current_scene():
 	return _scene_manager.get_current_scene()

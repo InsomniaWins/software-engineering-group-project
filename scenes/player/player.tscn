@@ -1,16 +1,73 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite_frames/player.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://scenes/player/health_manager.gd" type="Script" id=3]
 [ext_resource path="res://textures/hud/health_indicator.png" type="Texture" id=4]
 [ext_resource path="res://scenes/player/health_indicator.gd" type="Script" id=5]
+[ext_resource path="res://textures/items/sword.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3, 3 )
+extents = Vector2( 3, 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 6.5 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SwordSpriteScaler:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SwordSpriteScaler/SwordSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "swing_sword"
+length = 0.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("SwordSpriteScaler:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SwordSpriteScaler/SwordSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
@@ -22,7 +79,7 @@ frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 5 )
+position = Vector2( 0, 6 )
 shape = SubResource( 1 )
 
 [node name="HealthManager" type="Node" parent="."]
@@ -163,5 +220,18 @@ collision_mask = 2048
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2( 0, 3.5 )
 shape = SubResource( 2 )
+
+[node name="SwordSpriteScaler" type="Node2D" parent="."]
+visible = false
+position = Vector2( 0, 1 )
+
+[node name="SwordSprite" type="Sprite" parent="SwordSpriteScaler"]
+position = Vector2( -9, 0 )
+texture = ExtResource( 6 )
+hframes = 3
+
+[node name="AttackAnimationsPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/swing_sword = SubResource( 3 )
 
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]
