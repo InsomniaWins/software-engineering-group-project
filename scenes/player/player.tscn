@@ -301,4 +301,5 @@ stream = ExtResource( 7 )
 [node name="ChangeItemSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 
+[connection signal="health_reached_zero" from="HealthManager" to="." method="_on_HealthManager_health_reached_zero"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]

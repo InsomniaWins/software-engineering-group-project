@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 const Arrow = preload("res://scenes/arrow/arrow.tscn")
 
+const Bomb = preload("res://scenes/bomb/bomb.tscn")
+
 export var _facing_direction:Vector2 = Vector2.DOWN
 
 var move_speed:float = 64
@@ -104,6 +106,19 @@ func attack():
 			_swing_sword()
 		ItemManager.Items.BOW:
 			_shoot_bow()
+		ItemManager.Items.BOMB:
+			_throw_bomb()
+
+
+
+func _throw_bomb():
+	_attacking = true
+	
+	var bomb = Bomb.instance()
+	bomb.position = global_position
+	get_parent().add_child(bomb)
+	
+	_attacking = false
 
 
 func _shoot_bow():
@@ -275,3 +290,7 @@ func _on_PickupArea_body_entered(body):
 	if body.is_in_group("health_pickup"):
 		restore_health(1)
 		body.queue_free()
+
+
+func _on_HealthManager_health_reached_zero():
+	SceneManager.change_scene("res://scenes/game_over_screen/game_over_screen.tscn")
