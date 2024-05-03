@@ -124,13 +124,16 @@ func load_game():
 		printerr("Player is null and cannot load player info!")
 		get_tree().quit()
 	
-	player.selected_item = file.get_value("save_data", "player_selected_item", ItemManager.Items.SWORD)
 	player._health_manager._max_health = file.get_value("save_data", "player_max_health", 9)
 	player._health_manager._health = file.get_value("save_data", "player_health", 9)
 	player.global_position = file.get_value("save_data", "player_position", Vector2.ZERO)
 	player.face_direction(file.get_value("save_data", "player_facing_direction", Vector2.DOWN))
+	player.selected_item = file.get_value("save_data", "player_selected_item", ItemManager.Items.SWORD)
 	player._status_indicator_node.update_selected_item_icon(player.selected_item)
 	
+	
+	
+	# finished loading
 	return OK
 
 
