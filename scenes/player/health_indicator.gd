@@ -1,9 +1,22 @@
 extends Control
 
 const HEALTH_PER_HEART:int = 4
+const SWORD_ITEM_ICON = preload("res://textures/items/icons/sword.png")
+const BOW_ITEM_ICON = preload("res://textures/items/icons/bow.png")
 
 onready var _hearts_node:Control = $Hearts
 onready var _heart_nodes:Array = _hearts_node.get_children()
+onready var _selected_item_icon_node:TextureRect = $SelectedItemIcon
+
+func update_selected_item_icon(item_index:int):
+	
+	# TODO: add icon for bow
+	match item_index:
+		ItemManager.Items.SWORD:
+			_selected_item_icon_node.texture = SWORD_ITEM_ICON
+		_:
+			_selected_item_icon_node.texture = null
+	
 
 
 func update_hearts(health:int, max_health:int):

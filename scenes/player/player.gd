@@ -21,24 +21,30 @@ onready var _sword_sprite_scaler_node = $SwordSpriteScaler
 onready var _sword_sprite_node = _sword_sprite_scaler_node.get_node("SwordSprite")
 onready var _health_manager = $HealthManager
 onready var _hud:CanvasLayer = $Hud
-onready var _health_indicator_node:Control = _hud.get_node("HealthIndicator")
+onready var _status_indicator_node:Control = _hud.get_node("StatusIndicator")
 onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 onready var _sword_attack_area_node:Node2D = $SwordAttackArea
 onready var _sword_swing_sound_player_node:AudioStreamPlayer = $SwordSwingSound
 
 
+
+func _ready():
+	_status_indicator_node.update_selected_item_icon(selected_item)
+
+
+
 func _process(delta):
 	
 	
-	if Input.is_action_just_pressed("ui_accept"):
-		take_damage(1)
+	if Input.is_action_just_pressed("change_selected_item"):
+		change_selected_item()
 	
 	
 	_handle_sprite_animations(delta)
 	
 	# handle health indicator
-	_health_indicator_node.update_hearts(
+	_status_indicator_node.update_hearts(
 		_health_manager.get_health(),
 		_health_manager.get_max_health()
 	)
@@ -96,6 +102,18 @@ func attack():
 			_swing_sword()
 
 
+func change_selected_item(desired_item = null):
+	
+	if desired_item == null:
+		
+		selected_item = ItemManager.get_next_available_item(selected_item)
+		
+	else:
+		selected_item = desired_item
+	
+	_status_indicator_node.update_selected_item_icon(selected_item)
+
+
 func _swing_sword():
 	_can_change_selected_item = false
 	_attacking = true
@@ -131,21 +149,36 @@ func _swing_sword():
 
 func _handle_sprite_animations(_delta:float):
 	
-	match _facing_direction:
-		Vector2.UP:
-			_character_sprite_node.animation = "walk_up"
-		Vector2.DOWN:
-			_character_sprite_node.animation = "walk_down"
-		Vector2.LEFT:
-			_character_sprite_node.animation = "walk_left"
-		Vector2.RIGHT:
-			_character_sprite_node.animation = "walk_right"
-	
 	if is_moving():
-		_character_sprite_node.playing = true
+		
+		# is just now started walking, make sure first step of animation is visible
+		if !_character_sprite_node.animation.begins_with("walk_"):
+			_character_sprite_node.frame = 0
+		
+		match _facing_direction:
+			Vector2.UP:
+				_character_sprite_node.animation = "walk_up"
+			Vector2.DOWN:
+				_character_sprite_node.animation = "walk_down"
+			Vector2.LEFT:
+				_character_sprite_node.animation = "walk_left"
+			Vector2.RIGHT:
+				_character_sprite_node.animation = "walk_right"
+		
 	else:
-		_character_sprite_node.playing = false
-		_character_sprite_node.frame = 0
+		
+		
+		# TODO: should be idle, not walking animations 
+		match _facing_direction:
+			Vector2.UP:
+				_character_sprite_node.animation = "walk_up"
+			Vector2.DOWN:
+				_character_sprite_node.animation = "walk_down"
+			Vector2.LEFT:
+				_character_sprite_node.animation = "walk_left"
+			Vector2.RIGHT:
+				_character_sprite_node.animation = "walk_right"
+		
 
 
 func is_moving():
