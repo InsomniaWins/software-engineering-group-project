@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const Arrow = preload("res://scenes/arrow/arrow.tscn")
+
 export var _facing_direction:Vector2 = Vector2.DOWN
 
 var move_speed:float = 64
@@ -26,7 +28,7 @@ onready var _previous_position:Vector2 = position
 onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 onready var _sword_attack_area_node:Node2D = $SwordAttackArea
 onready var _sword_swing_sound_player_node:AudioStreamPlayer = $SwordSwingSound
-
+onready var _change_selected_item_sound_node:AudioStreamPlayer = $ChangeItemSound
 
 
 func _ready():
@@ -100,6 +102,20 @@ func attack():
 	match selected_item:
 		ItemManager.Items.SWORD:
 			_swing_sword()
+		ItemManager.Items.BOW:
+			_shoot_bow()
+
+
+func _shoot_bow():
+	_attacking = true
+	
+	var arrow = Arrow.instance()
+	arrow.position = global_position
+	arrow.direction = _facing_direction
+	arrow.set_shooter(self)
+	get_parent().add_child(arrow)
+	
+	_attacking = false
 
 
 func change_selected_item(desired_item = null):
@@ -111,6 +127,7 @@ func change_selected_item(desired_item = null):
 	else:
 		selected_item = desired_item
 	
+	_change_selected_item_sound_node.play(0.0)
 	_status_indicator_node.update_selected_item_icon(selected_item)
 
 
@@ -240,15 +257,19 @@ func _process_movement(_delta:float):
 			elif velocity.y > 0:
 				_facing_direction = Vector2.DOWN
 
+
 func is_on_stairs():
 	return _on_stairs
+
 
 func restore_health(heal_amount:int):
 	_health_manager.restore_health(heal_amount)
 
+
 func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
 	_health_manager.take_damage(damage_amount)
 	_knockback_velocity = knockback
+
 
 func _on_PickupArea_body_entered(body):
 	if body.is_in_group("health_pickup"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/slime/slime.gd" type="Script" id=1]
 [ext_resource path="res://textures/entities/slime.png" type="Texture" id=2]
@@ -27,6 +27,9 @@ extents = Vector2( 5, 2.5 )
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 7, 4.5 )
 
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 7, 5.5 )
+
 [node name="Slime" type="KinematicBody2D" groups=["enemy"]]
 script = ExtResource( 1 )
 
@@ -54,5 +57,13 @@ enabled = true
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="HitBox" type="Area2D" parent="." groups=["hit_box"]]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( 0, -1.5 )
+shape = SubResource( 7 )
 
 [connection signal="health_reached_zero" from="HealthManager" to="." method="_on_HealthManager_health_reached_zero"]
