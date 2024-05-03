@@ -230,4 +230,27 @@ func _process_movement(_delta:float):
 	# set facing direction if moving
 	if is_moving():
 		if abs(velocity.x) > abs(velocity.y):
-			if velocity.x
+			if velocity.x < 0:
+				_facing_direction = Vector2.LEFT
+			elif velocity.x > 0:
+				_facing_direction = Vector2.RIGHT
+		else:
+			if velocity.y < 0:
+				_facing_direction = Vector2.UP
+			elif velocity.y > 0:
+				_facing_direction = Vector2.DOWN
+
+func is_on_stairs():
+	return _on_stairs
+
+func restore_health(heal_amount:int):
+	_health_manager.restore_health(heal_amount)
+
+func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
+	_health_manager.take_damage(damage_amount)
+	_knockback_velocity = knockback
+
+func _on_PickupArea_body_entered(body):
+	if body.is_in_group("health_pickup"):
+		restore_health(1)
+		body.queue_free()
