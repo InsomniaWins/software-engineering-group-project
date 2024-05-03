@@ -151,10 +151,6 @@ func _handle_sprite_animations(_delta:float):
 	
 	if is_moving():
 		
-		# is just now started walking, make sure first step of animation is visible
-		if !_character_sprite_node.animation.begins_with("walk_"):
-			_character_sprite_node.frame = 0
-		
 		match _facing_direction:
 			Vector2.UP:
 				_character_sprite_node.animation = "walk_up"
@@ -167,17 +163,15 @@ func _handle_sprite_animations(_delta:float):
 		
 	else:
 		
-		
-		# TODO: should be idle, not walking animations 
 		match _facing_direction:
 			Vector2.UP:
-				_character_sprite_node.animation = "walk_up"
+				_character_sprite_node.animation = "idle_up"
 			Vector2.DOWN:
-				_character_sprite_node.animation = "walk_down"
+				_character_sprite_node.animation = "idle_down"
 			Vector2.LEFT:
-				_character_sprite_node.animation = "walk_left"
+				_character_sprite_node.animation = "idle_left"
 			Vector2.RIGHT:
-				_character_sprite_node.animation = "walk_right"
+				_character_sprite_node.animation = "idle_right"
 		
 
 
@@ -236,31 +230,4 @@ func _process_movement(_delta:float):
 	# set facing direction if moving
 	if is_moving():
 		if abs(velocity.x) > abs(velocity.y):
-			if velocity.x < 0:
-				_facing_direction = Vector2.LEFT
-			elif velocity.x > 0:
-				_facing_direction = Vector2.RIGHT
-		else:
-			if velocity.y < 0:
-				_facing_direction = Vector2.UP
-			elif velocity.y > 0:
-				_facing_direction = Vector2.DOWN
-
-
-func is_on_stairs():
-	return _on_stairs
-
-
-func restore_health(heal_amount:int):
-	_health_manager.restore_health(heal_amount)
-
-
-func take_damage(damage_amount:int, knockback:Vector2 = Vector2.ZERO):
-	_health_manager.take_damage(damage_amount)
-	_knockback_velocity = knockback
-
-
-func _on_PickupArea_body_entered(body):
-	if body.is_in_group("health_pickup"):
-		restore_health(1)
-		body.queue_free()
+			if velocity.x
