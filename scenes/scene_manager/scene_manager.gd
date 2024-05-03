@@ -48,6 +48,9 @@ func _copy_information_between_levels(previous_level, next_level):
 		if current_music != next_music:
 			_level_music_player_node.stream = next_music
 			_level_music_player_node.play()
+	else:
+		_level_music_player_node.stop()
+		_level_music_player_node.stream = null
 	
 
 
