@@ -7,7 +7,7 @@ const ATTACK_TIMER_INTERVAL:float = 0.5
 
 var move_speed:float = 24
 
-
+var _random_number_generator:RandomNumberGenerator = RandomNumberGenerator.new()
 var _attack_cooldown_time:float = ATTACK_TIMER_INTERVAL
 var _attack_distance = 8.0
 var _target_node:Node2D = null
@@ -24,6 +24,11 @@ onready var _health_manager_node:Node = $HealthManager
 onready var _attack_area_node:Area2D = $AttackArea
 onready var _sprite_node:AnimatedSprite = $Sprite
 onready var _damage_sound_player_node:AudioStreamPlayer = $DamageSound
+
+
+func _ready():
+	_random_number_generator.randomize()
+
 
 func _physics_process(delta):
 	
@@ -125,7 +130,7 @@ func _on_HealthManager_health_reached_zero():
 
 
 func _spawn_drops():
-	if randf() <= 0.5:
+	if _random_number_generator.randf() <= 0.5:
 		
 		var health_pickup = HealthPickup.instance()
 		health_pickup.position = global_position

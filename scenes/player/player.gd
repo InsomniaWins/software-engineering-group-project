@@ -27,6 +27,7 @@ onready var _character_sprite_node:AnimatedSprite = $AnimatedSprite
 onready var _sword_attack_area_node:Node2D = $SwordAttackArea
 onready var _sword_swing_sound_player_node:AudioStreamPlayer = $SwordSwingSound
 
+
 func _process(delta):
 	
 	

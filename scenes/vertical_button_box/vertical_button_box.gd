@@ -12,7 +12,7 @@ export var _button_names:Array = []
 var _selected_button:int = 0
 
 onready var _button_vbox_container_node = $Buttons
-
+onready var _move_sound_player_node = $MoveSound
 
 func _ready():
 	_update_labels()
@@ -84,6 +84,9 @@ func _move(move_amount:int):
 	
 	while _selected_button > _button_names.size() - 1:
 		_selected_button -= _button_names.size()
+	
+	if previously_selected_button != _selected_button:
+		_move_sound_player_node.play(0.0)
 	
 	_button_deselected(previously_selected_button)
 	_button_selected(_selected_button)
