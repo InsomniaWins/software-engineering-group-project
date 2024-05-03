@@ -5,7 +5,7 @@ signal health_reached_zero
 const FINAL_MAX_HEALTH:int = 72
 
 var _max_health:int = 12
-var _health:int = 1
+var _health:int = 12
 
 
 func restore_health(heal_amount:int):

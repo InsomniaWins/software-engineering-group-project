@@ -3,6 +3,7 @@ extends Control
 const HEALTH_PER_HEART: int = 4
 const SWORD_ITEM_ICON = preload("res://textures/items/icons/sword.png")
 const BOW_ITEM_ICON = preload("res://textures/items/icons/bow.png")
+const BOMB_ITEM_ICON = preload("res://textures/items/icons/bomb.png")
 
 onready var _hearts_node: Control = $Hearts
 onready var _heart_nodes: Array = _hearts_node.get_children()
@@ -14,6 +15,8 @@ func update_selected_item_icon(item_index: int):
 			_selected_item_icon_node.texture = SWORD_ITEM_ICON
 		ItemManager.Items.BOW: # Assuming BOW is defined in ItemManager.Items
 			_selected_item_icon_node.texture = BOW_ITEM_ICON
+		ItemManager.Items.BOMB:
+			_selected_item_icon_node.texture = BOMB_ITEM_ICON
 		_:
 			_selected_item_icon_node.texture = null
 

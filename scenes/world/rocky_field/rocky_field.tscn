@@ -459,10 +459,8 @@ position = Vector2( 120, 58 )
 position = Vector2( 138, 138 )
 
 [node name="CameraBounds" type="Control" parent="."]
-margin_left = -16.0
-margin_top = -15.0
-margin_right = 320.0
-margin_bottom = 177.0
+margin_right = 336.0
+margin_bottom = 192.0
 
 [node name="LevelTrigger" type="Area2D" parent="."]
 position = Vector2( 336, 64 )
