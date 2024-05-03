@@ -43,15 +43,21 @@ func save_game():
 	var player = SceneManager.get_player()
 	
 	if player != null:
+		file.set_value("save_data", "player_selected_item", player.selected_item)
 		file.set_value("save_data", "player_health", player._health_manager.get_health())
 		file.set_value("save_data", "player_max_health", player._health_manager.get_max_health())
 		file.set_value("save_data", "player_position", player.global_position)
 		file.set_value("save_data", "player_facing_direction", player.get_facing_direction())
 	else:
+		file.set_value("save_data", "player_selected_item", ItemManager.Items.SWORD)
 		file.set_value("save_data", "player_health", 9)
 		file.set_value("save_data", "player_max_health", 9)
 		file.set_value("save_data", "player_position", Vector2.ZERO)
 		file.set_value("save_data", "player_facing_direction", Vector2.DOWN)
+	
+	
+	# save unlocked items
+	file.set_value("save_data", "unlocked_items", ItemManager.unlocked_items)
 	
 	
 	
@@ -94,6 +100,10 @@ func load_game():
 	
 	
 	
+	# load unlocked items
+	ItemManager.unlocked_items = file.get_value("save_data", "unlocked_items", [ItemManager.Items.SWORD])
+	
+	
 	
 	# load current scene
 	var current_scene = file.get_value("save_data", "current_scene", null)
@@ -105,17 +115,21 @@ func load_game():
 	
 	yield(SceneManager, "scene_ready")
 	
+	
+	
+	
 	# load player info
 	var player = SceneManager.get_player()
 	if player == null:
 		printerr("Player is null and cannot load player info!")
 		get_tree().quit()
 	
+	player.selected_item = file.get_value("save_data", "player_selected_item", ItemManager.Items.SWORD)
 	player._health_manager._max_health = file.get_value("save_data", "player_max_health", 9)
 	player._health_manager._health = file.get_value("save_data", "player_health", 9)
 	player.global_position = file.get_value("save_data", "player_position", Vector2.ZERO)
 	player.face_direction(file.get_value("save_data", "player_facing_direction", Vector2.DOWN))
-	
+	player._status_indicator_node.update_selected_item_icon(player.selected_item)
 	
 	return OK
 
