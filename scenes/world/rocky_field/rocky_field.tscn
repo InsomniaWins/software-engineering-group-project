@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://scenes/level/level.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/world_tileset.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://classes/level_trigger.gd" type="Script" id=4]
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/slime/slime.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/red_slime/red_slime.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -451,9 +452,17 @@ position = Vector2( 48, 104 )
 [node name="Slime2" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 264, 80 )
 
+[node name="RedSlime" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 120, 58 )
+
+[node name="RedSlime2" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 138, 138 )
+
 [node name="CameraBounds" type="Control" parent="."]
-margin_right = 336.0
-margin_bottom = 192.0
+margin_left = -16.0
+margin_top = -15.0
+margin_right = 320.0
+margin_bottom = 177.0
 
 [node name="LevelTrigger" type="Area2D" parent="."]
 position = Vector2( 336, 64 )

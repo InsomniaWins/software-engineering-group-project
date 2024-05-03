@@ -99,7 +99,6 @@ shape = SubResource( 1 )
 script = ExtResource( 3 )
 
 [node name="Hud" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="StatusIndicator" type="Control" parent="Hud"]
 margin_right = 192.0
