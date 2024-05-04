@@ -56,7 +56,6 @@ func _physics_process(delta):
 
 
 func _check_player_in_range():
-	_player_in_range
 	var player = SceneManager.get_player()
 	if is_instance_valid(player):
 		_player_vision_ray_cast.cast_to = _vision_range * (player.get_collision_box().global_position - _player_vision_ray_cast.global_position).normalized()
@@ -142,6 +141,6 @@ func _died():
 	
 	_spawn_drops()
 	
-	AudioManager.play_sound(preload("res://sounds/fly_away.ogg"))
+	var _audio_player = AudioManager.play_sound(preload("res://sounds/fly_away.ogg"))
 	
 	queue_free()

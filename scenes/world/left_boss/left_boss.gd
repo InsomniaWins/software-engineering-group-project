@@ -73,10 +73,10 @@ func _on_Boss_boss_died():
 	
 	var player = SceneManager.get_player()
 	var add_max_health_amount:int = 16
-	var max_health_amount:int = min(
+	var max_health_amount:int = int(min(
 		player._health_manager.get_max_health() + add_max_health_amount,
 		player._health_manager.FINAL_MAX_HEALTH
-		)
+		))
 	
 	player._health_manager.set_max_health(max_health_amount)
 	

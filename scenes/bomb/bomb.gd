@@ -10,7 +10,7 @@ onready var blast_radius_node:Area2D = $BlastRadius
 
 func explode():
 	
-	AudioManager.play_sound(EXPLODE_SOUND)
+	var _audio_player_node = AudioManager.play_sound(EXPLODE_SOUND)
 	
 	for area in blast_radius_node.get_overlapping_areas():
 		if area.is_in_group("hit_box"):

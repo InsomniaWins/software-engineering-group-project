@@ -4,11 +4,11 @@ extends KinematicBody2D
 var _velocity:Vector2 = Vector2.ZERO
 
 
-func _physics_process(delta):
-	move(delta)
+func _physics_process(_delta):
+	move()
 
 
-func move(delta:float):
+func move():
 	_velocity = move_and_slide(_velocity)
 	_velocity *= 0.25
 

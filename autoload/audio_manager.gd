@@ -5,7 +5,7 @@ func play_sound(sound:AudioStream) -> AudioStreamPlayer:
 	var player:AudioStreamPlayer = AudioStreamPlayer.new()
 	
 	player.stream = sound
-	player.connect("finished", player, "queue_free")
+	var _connect_status = player.connect("finished", player, "queue_free")
 	
 	add_child(player)
 	
