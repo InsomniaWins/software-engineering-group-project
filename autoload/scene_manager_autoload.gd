@@ -25,3 +25,6 @@ func get_player():
 		return null
 	
 	return player_nodes[0]
+
+func stop_level_music():
+	_scene_manager.stop_level_music()

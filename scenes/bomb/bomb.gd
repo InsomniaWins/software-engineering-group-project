@@ -2,7 +2,9 @@ extends Node2D
 
 const EXPLODE_SOUND:AudioStream = preload("res://sounds/bomb_explode.wav")
 
-var explode_damage: int = 2
+var explode_damage:int = 4
+
+var _knockback_force:float = 200
 
 onready var blast_radius_node:Area2D = $BlastRadius
 
@@ -10,13 +12,20 @@ func explode():
 	
 	AudioManager.play_sound(EXPLODE_SOUND)
 	
-	var entities = blast_radius_node.get_overlapping_areas()
-	for collider in entities:
-		if collider.is_in_group("hit_box"):
-			var entity = collider.get_parent()
-			entity.take_damage(explode_damage)
+	for area in blast_radius_node.get_overlapping_areas():
+		if area.is_in_group("hit_box"):
+			_damage_entity(area.get_parent())
+	
+	for body in blast_radius_node.get_overlapping_bodies():
+		if body.is_in_group("player"):
+			_damage_entity(body)
 	
 	queue_free()
+
+
+func _damage_entity(entity):
+	var knockback:Vector2 = (entity.global_position - global_position).normalized() * _knockback_force
+	entity.take_damage(explode_damage, knockback)
 
 
 func _on_ExplodeTimer_timeout():

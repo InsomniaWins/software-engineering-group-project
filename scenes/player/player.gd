@@ -17,6 +17,7 @@ var _movement_input:Vector2 = Vector2()
 var _on_stairs:bool = false
 var _moving:bool = false
 var _can_change_selected_item:bool = false
+var _shoot_timer:float = 0.0
 
 onready var _collision_shape = $CollisionShape2D
 onready var _interaction_raycast_node = $InteractionRayCast
@@ -40,6 +41,7 @@ func _ready():
 
 func _process(delta):
 	
+	_shoot_timer = max(0.0, _shoot_timer - delta)
 	
 	if Input.is_action_just_pressed("change_selected_item"):
 		change_selected_item()
@@ -122,6 +124,10 @@ func _throw_bomb():
 
 
 func _shoot_bow():
+	
+	if _shoot_timer > 0.0:
+		return
+	
 	_attacking = true
 	
 	var arrow = Arrow.instance()
@@ -129,6 +135,9 @@ func _shoot_bow():
 	arrow.direction = _facing_direction
 	arrow.set_shooter(self)
 	get_parent().add_child(arrow)
+	
+	_shoot_timer = 1.0
+	yield(get_tree().create_timer(0.15), "timeout")
 	
 	_attacking = false
 

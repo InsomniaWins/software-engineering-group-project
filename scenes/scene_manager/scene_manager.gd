@@ -17,6 +17,10 @@ func _ready():
 		_current_scene = _current_scene_node.get_child(0)
 
 
+func stop_level_music():
+	_level_music_player_node.stop()
+
+
 func get_current_scene() -> Node:
 	return _current_scene
 
@@ -38,7 +42,8 @@ func _copy_information_between_levels(previous_level, next_level):
 		
 		player_node._health_manager.set_max_health(previous_max_health)
 		player_node._health_manager.set_health(previous_health)
-	
+		player_node.selected_item = previous_player_node.selected_item
+		player_node._status_indicator_node.update_selected_item_icon(player_node.selected_item)
 	
 	# handle level music playing/pausing/stopping
 	if !next_level.level_music.empty():
