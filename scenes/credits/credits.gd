@@ -65,5 +65,7 @@ func _on_TextDisplayTimer_timeout():
 		_show_text(_text_array[_current_text_index])
 	else:
 		
-		#TODO: Go to title after five seconds
-		pass
+		yield (get_tree().create_timer(5),"timeout")
+		SceneManager.change_scene("res://scenes/titlescreen/titlescreen.tscn")
+		
+		
