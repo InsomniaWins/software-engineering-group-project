@@ -114,11 +114,17 @@ func attack():
 
 
 func _throw_bomb():
+	
+	if _shoot_timer > 0.0:
+		return
+	
 	_attacking = true
 	
 	var bomb = Bomb.instance()
 	bomb.position = global_position
 	get_parent().add_child(bomb)
+	
+	_shoot_timer = 1.25
 	
 	_attacking = false
 

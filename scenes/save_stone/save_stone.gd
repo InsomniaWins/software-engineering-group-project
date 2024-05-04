@@ -7,6 +7,13 @@ onready var _save_sound_audio_player:AudioStreamPlayer = $SaveSound
 onready var _glow_sprite:Sprite = $GlowSprite
 
 func interact():
+	
+	var player = SceneManager.get_player()
+	if is_instance_valid(player):
+		player._health_manager.set_health(
+			player._health_manager.get_max_health()
+		)
+	
 	SaveManager.save_game()
 	_start_glow()
 	_save_sound_audio_player.play(0.0)

@@ -18,7 +18,8 @@ func _ready():
 	_update_labels()
 	select_button(0)
 
-
+func _physics_process(delta):
+	rect_size = $Buttons.rect_size
 
 func _unhandled_input(event):
 	if event.is_action_pressed("up"):

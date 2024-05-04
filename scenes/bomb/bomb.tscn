@@ -16,7 +16,7 @@ texture = ExtResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[node name="BlastRadius" type="Area2D" parent="."]
+[node name="BlastRadius" type="Area2D" parent="." groups=["dont_break_arrows"]]
 collision_layer = 16
 collision_mask = 16
 

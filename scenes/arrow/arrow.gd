@@ -35,13 +35,15 @@ func _physics_process(delta):
 	if is_colliding():
 		var collider = get_collider()
 		
-		if collider.is_in_group("hit_box"):
-			var entity = collider.get_parent()
+		if !collider.is_in_group("dont_break_arrows"):
 			
-			if entity.is_in_group("enemy"):
-				var damage_amount:int = 1
-				var knockback:Vector2 = 150 * direction
+			if collider.is_in_group("hit_box"):
+				var entity = collider.get_parent()
 				
-				entity.take_damage(damage_amount, knockback)
-		
-		queue_free()
+				if entity.is_in_group("enemy"):
+					var damage_amount:int = 1
+					var knockback:Vector2 = 150 * direction
+					
+					entity.take_damage(damage_amount, knockback)
+			
+			queue_free()

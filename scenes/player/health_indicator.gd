@@ -25,7 +25,11 @@ func update_hearts(health: int, max_health: int):
 	var heart_of_max_health: int = int(max_health / float(HEALTH_PER_HEART)) - 1
 
 	for i in _heart_nodes.size():
+		
 		var heart_node = _heart_nodes[i]
+		
+		heart_node.visible = true
+		
 		if i == active_heart:
 			var frame: int = ((active_heart * HEALTH_PER_HEART) - health) + 4
 			heart_node.frame = frame
@@ -35,3 +39,6 @@ func update_hearts(health: int, max_health: int):
 			heart_node.frame = 4
 		else:
 			heart_node.frame = 5
+		
+		if i >= get_parent().get_parent()._health_manager.FINAL_MAX_HEALTH / 4:
+			heart_node.visible = false

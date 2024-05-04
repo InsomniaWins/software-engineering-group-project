@@ -2,7 +2,7 @@ extends Node
 
 signal health_reached_zero
 
-const FINAL_MAX_HEALTH:int = 72
+const FINAL_MAX_HEALTH:int = 60
 
 var _max_health:int = 12
 var _health:int = 12

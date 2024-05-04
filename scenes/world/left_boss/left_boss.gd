@@ -4,9 +4,9 @@ const Magic = preload("res://scenes/left_enemy_magic/left_enemy_magic.tscn")
 
 var _magic_creation_timer:float = 1.0
 
-onready var _boss_animation_player_node:AnimationPlayer = $Boss/BossAnimations
-onready var _boss_attack_timer_node:Timer = $Boss/AttackTimer
-onready var _boss_node:StaticBody2D = $Boss
+onready var _boss_node:StaticBody2D = $YSort/Boss
+onready var _boss_animation_player_node:AnimationPlayer = _boss_node.get_node("BossAnimations")
+onready var _boss_attack_timer_node:Timer = _boss_node.get_node("AttackTimer")
 onready var _ysort_node:YSort = $YSort
 onready var _boss_sprite_node:Sprite = _boss_node.get_node("Sprite")
 
@@ -41,7 +41,7 @@ func _shoot_magic():
 
 
 func _despawn_left_boss():
-	$Boss.queue_free()
+	_boss_node.queue_free()
 	SceneManager.stop_level_music()
 
 
@@ -81,7 +81,7 @@ func _on_Boss_boss_died():
 	player._health_manager.set_max_health(max_health_amount)
 	
 	ItemManager.unlocked_items.append(ItemManager.Items.BOW)
-	player.change_selected_item()
+	player.change_selected_item(ItemManager.Items.BOW)
 
 
 
