@@ -13,5 +13,9 @@ func _on_VerticalButtonBox_button_pressed(button_box, button_index):
 		"CONTINUE":
 			SaveManager.load_game()
 		"QUIT":
+			
 			get_tree().quit()
-		#TODO: go to credits on CREDITS button pressed
+		"CREDITS":
+			
+			SceneManager.change_scene(CREDITS_DIALOG_PATH)
+
